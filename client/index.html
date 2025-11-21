@@ -1,25 +1,37 @@
-<!DOCTYPE html> <!-- Define el tipo de documento como HTML5, lo que indica al navegador cómo interpretar el archivo -->
-<html> <!-- Inicio del documento HTML, contiene todos los elementos visibles y no visibles de la página -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Chat Room</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="chat-wrapper">
+        <header class="chat-header">
+            <h1>Neon Chat Room</h1>
+            <div class="online-indicator">
+                <span class="dot"></span>
+                <span>Conectado</span>
+            </div>
+        </header>
 
-<head> <!-- Sección del encabezado, incluye metadatos, enlaces a hojas de estilo y el título del documento -->
-    <title>Chat Tablero</title> <!-- Título que se muestra en la pestaña del navegador -->
-    <link rel="stylesheet" href="style.css"> <!-- Enlaza la hoja de estilos externa, que contiene el diseño y la apariencia del tablero de chat -->
-</head> <!-- Cierre de la sección de encabezado -->
+        <div id="chat-container">
+            <div id="messages"></div>
+        </div>
 
-<body> <!-- Inicio del cuerpo del documento, todo lo que se renderiza visualmente en la página va dentro de aquí -->
-    <div class="chat-board"> <!-- Contenedor principal del tablero de chat, con clase chat-board para aplicar estilos CSS personalizados -->
-        <h1>✨ Tablero de Chat</h1> <!-- Título principal que se muestra en la parte superior del tablero, con un emoji decorativo para un toque moderno -->
+        <div class="input-container">
+            <input type="text" id="messageInput" placeholder="Escribe algo increíble..." autocomplete="off">
+            <button id="sendButton" aria-label="Enviar">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 2L11 13"></path>
+                    <path d="M22 2l-7 20-4-9-9-4z"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
 
-        <div id="chat-container"> <!-- Contenedor de los mensajes del chat, se usará para agrupar el área de mensajes -->
-            <div id="messages"></div> <!-- Zona donde aparecerán los mensajes del chat. Se actualizará dinámicamente con JavaScript -->
-        </div> <!-- Cierre del contenedor de mensajes -->
-
-        <div class="input-area"> <!-- Zona para escribir y enviar mensajes, con clase input-area para su estilo -->
-            <input type="text" id="messageInput" placeholder="Escribe tu mensaje..."> <!-- Campo de texto donde el usuario escribe su mensaje. El placeholder muestra un texto guía -->
-            <button id="sendButton">Enviar</button> <!-- Botón para enviar el mensaje. Al hacer clic, el mensaje será procesado por JavaScript -->
-        </div> <!-- Cierre de la zona de entrada de mensajes -->
-    </div> <!-- Cierre del contenedor principal del chat -->
-
-    <script src="script.js"></script> <!-- Importa el archivo JavaScript que contiene la lógica del chat: envío, recepción y visualización de mensajes -->
-</body> <!-- Cierre del cuerpo del documento -->
-</html> <!-- Cierre del documento HTML completo -->
+    <script src="script.js"></script>
+</body>
+</html>

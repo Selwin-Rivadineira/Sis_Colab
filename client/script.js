@@ -1,40 +1,60 @@
-const socket = new WebSocket('ws://localhost:8080'); //Conecta al servidor Websocket
-const messagesDiv = document.getElementById('messages'); //Contenedor de mensajes
-const input = document.getElementById('messageInput'); //Campo de texto
-const sendButton = document.getElementById('sendButton'); //Boton de enviar
+const socket = new WebSocket('ws://localhost:8080');
+const messagesDiv = document.getElementById('messages');
+const input = document.getElementById('messageInput');
+const sendButton = document.getElementById('sendButton');
 
-// Función para enviar mensajes
 const sendMessage = () => {
-    const message = input.value.trim(); //Elimina espacios
+    const message = input.value.trim();
     if (message && socket.readyState === WebSocket.OPEN) {
-        socket.send(message); //Envia mensaje al servidor
-        input.value = ''; //Limpia el input
+        socket.send(message);
+        input.value = '';
     }
 };
 
-// Eventos al presionar "Enviar" o "Enter"
 sendButton.addEventListener('click', sendMessage);
 input.addEventListener('keypress', (e) => e.key === 'Enter' && sendMessage());
 
-// Manejar mensajes entrantes
 socket.onmessage = (event) => {
-    const data = JSON.parse(event.data); //Convierte el mensaje
-    const msgElement = document.createElement('div');//Crea div para el mensaje
-    // Verifica el tipo de mensaje recibido desde el servidor
+    const data = JSON.parse(event.data);
+    const msgElement = document.createElement('div');
+    msgElement.classList.add('message');
+
     if (data.type === 'system') {
-        msgElement.className = 'message system-message';
+        msgElement.classList.add('system');
         msgElement.textContent = data.message;
-    } 
-    else if (data.type === 'self') {
-        msgElement.className = 'message my-message'; // Se muestra alado derecho con otro estilo
-        msgElement.textContent = data.message; // Solo contiene el txt del mensaje enviado
-    } 
-    else {
-        msgElement.className = 'message user-message'; //Estilo para mensaje de otros
-        msgElement.style.backgroundColor = data.color; //Aplica un color diferente por usuarios
-        msgElement.textContent = `${data.user}: ${data.message}`; //Muestra el nombre del usuario y su mensaje
+    } else if (data.type === 'self') {
+        msgElement.classList.add('own');
+        msgElement.innerHTML = `
+            <div class="bubble">${escapeHtml(data.message)}</div>
+            <div class="avatar own-avatar">Yo</div>
+        `;
+    } else {
+        const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7', '#a29bfe'];
+        const color = colors[Math.abs(hashCode(data.user)) % colors.length];
+        msgElement.innerHTML = `
+            <div class="avatar" style="background: ${color}">${data.user.charAt(0).toUpperCase()}</div>
+            <div class="bubble" style="background: ${color}20; border: 1px solid ${color}40;">
+                <div class="username">${escapeHtml(data.user)}</div>
+                ${escapeHtml(data.message)}
+            </div>
+        `;
     }
 
-    messagesDiv.appendChild(msgElement); //Agrega mensaje al DOM
-    messagesDiv.scrollTop = messagesDiv.scrollHeight; //Baja al final del chat
+    messagesDiv.appendChild(msgElement);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
 };
+
+// Funciones auxiliares
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function hashCode(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return hash;
+}

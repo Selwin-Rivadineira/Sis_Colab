@@ -6,9 +6,28 @@
     <title>Neon Chat Room</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://accounts.google.com/gsi/client" async defer></script> 
 </head>
 <body>
-    <div class="chat-wrapper">
+    <div id="g_id_onload"
+         data-client_id="907364529014-u93kqtnn9u7025qu6otfk91h9j0v1qmg.apps.googleusercontent.com"
+         data-context="signin"
+         data-ux_mode="popup"
+         data-callback="handleCredentialResponse"
+         data-auto_prompt="false">
+    </div>
+
+    <div class="g_id_signin"
+         data-type="standard"
+         data-size="large"
+         data-theme="outline"
+         data-text="sign_in_with"
+         data-shape="rectangular"
+         data-logo_alignment="left">
+    </div>
+
+    <div class="chat-wrapper" id="chatWrapper" style="display:none;">
         <header class="chat-header">
             <h1>Neon Chat Room</h1>
             <div class="online-indicator">

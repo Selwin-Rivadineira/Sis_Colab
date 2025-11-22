@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "ws": "^8.18.2"
+    "google-auth-library": "^10.5.0",
+    "ws": "^8.18.3"
   }
 }

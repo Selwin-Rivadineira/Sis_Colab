@@ -1,73 +1,67 @@
-<!DOCTYPE html> <!-- Indica que el documento usa HTML5 -->
-
-<html lang="es"> <!-- Inicio del documento HTML, con idioma configurado a español -->
-
-<head> <!-- Sección que contiene metadatos, estilos y el título -->
+<!DOCTYPE html> 
+<html lang="es"> 
+<head> 
     
-    <meta charset="UTF-8"> <!-- Define la codificación de caracteres como UTF-8 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Hace el sitio adaptable a móviles -->
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 
-    <title>Neon Chat Room</title> <!-- Texto que aparecerá en la pestaña del navegador -->
+    <title>Neon Chat Room</title> 
 
-    <link rel="stylesheet" href="style.css"> <!-- Enlace al archivo CSS que controla el diseño -->
+    <link rel="stylesheet" href="style.css"> 
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico"> 
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Importa la fuente "Inter" desde Google Fonts -->
-
+    
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <!-- Carga el SDK de Google para iniciar sesión con Google -->
-</head> <!-- Fin de la cabecera -->
+</head> 
 
-<body> <!-- Inicio del contenido visible de la página -->
+<body> 
 
-    <div id="g_id_onload"
-         data-client_id="907364529014-u93kqtnn9u7025qu6otfk91h9j0v1qmg.apps.googleusercontent.com" <!-- ID de tu app en Google -->
-         data-context="signin" <!-- Indica que se usará para iniciar sesión -->
-         data-ux_mode="popup" <!-- Abre el login en una ventana emergente -->
-         data-callback="handleCredentialResponse" <!-- Función que procesará el login -->
-         data-auto_prompt="false"> <!-- Evita que Google muestre el login automáticamente -->
-    </div> <!-- Fin de configuración de Google Login -->
-
-    <div class="g_id_signin"
-         data-type="standard" <!-- Tipo de botón -->
-         data-size="large" <!-- Tamaño del botón -->
-         data-theme="outline" <!-- Estilo visual -->
-         data-text="sign_in_with" <!-- Texto del botón -->
-         data-shape="rectangular" <!-- Forma rectangular -->
-         data-logo_alignment="left"> <!-- Logo de Google alineado a la izquierda -->
-    </div> <!-- Botón de inicio de sesión con Google -->
-
+    <div id="google-sign-in" class="google-sign-in-container">
+        <div id="g_id_onload"
+             data-client_id="907364529014-u93kqtnn9u7025qu6otfk91h9j0v1qmg.apps.googleusercontent.com" 
+             data-context="signin" 
+             data-ux_mode="popup" 
+             data-callback="handleCredentialResponse" 
+             data-auto_prompt="false"> 
+        </div>
+        
+        <div class="g_id_signin"
+             data-type="standard" 
+             data-size="large" 
+             data-theme="outline" 
+             data-text="sign_in_with" 
+             data-shape="rectangular" 
+             data-logo_alignment="left"> 
+        </div>
+    </div>
+    
     <div class="chat-wrapper" id="chatWrapper" style="display:none;"> 
-        <!-- Contenedor principal del chat, oculto hasta que el usuario inicie sesión -->
+        <header class="chat-header"> 
+            <h1>Neon Chat Room</h1> 
 
-        <header class="chat-header"> <!-- Encabezado del chat -->
-            <h1>Neon Chat Room</h1> <!-- Título del chat -->
-
-            <div class="online-indicator"> <!-- Indicador de estado conectado -->
-                <span class="dot"></span> <!-- Punto verde de conexión -->
-                <span>Conectado</span> <!-- Texto de estado -->
+            <div class="online-indicator"> 
+                <span class="dot"></span> 
+                <span>Conectado</span> 
             </div>
-        </header> <!-- Fin del encabezado -->
+        </header> 
 
-        <div id="chat-container"> <!-- Contenedor general de mensajes -->
-            <div id="messages"></div> <!-- Zona donde aparecerán los mensajes del chat -->
+        <div id="chat-container"> 
+            <div id="messages"></div> 
         </div>
 
-        <div class="input-container"> <!-- Área donde el usuario escribe -->
+        <div class="input-container"> 
             <input type="text" id="messageInput" placeholder="Escribe algo increíble..." autocomplete="off">
-            <!-- Campo de entrada del mensaje -->
-
-            <button id="sendButton" aria-label="Enviar"> <!-- Botón para enviar el mensaje -->
-                <!-- Ícono SVG con diseño de avión de papel -->
+            
+            <button id="sendButton" aria-label="Enviar"> 
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M22 2L11 13"></path>
                     <path d="M22 2l-7 20-4-9-9-4z"></path>
                 </svg>
             </button>
-        </div> <!-- Fin del área de entrada -->
-    </div> <!-- Fin del chat -->
+        </div> 
+    </div> 
 
-    <script src="script.js"></script> <!-- Archivo JS con la lógica del chat y login -->
-</body> <!-- Fin del cuerpo -->
-
-</html> <!-- Fin del documento HTML -->
+    <script src="script.js"></script> </body> 
+</html>

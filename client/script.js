@@ -3,6 +3,7 @@ let socket = null; // Variable para almacenar la conexión WebSocket
 const messagesDiv = document.getElementById('messages'); // Contenedor donde se mostrarán los mensajes
 const input = document.getElementById('messageInput');   // Campo de texto donde el usuario escribe
 const sendButton = document.getElementById('sendButton'); // Botón para enviar el mensaje
+const chatWrapper = document.getElementById('chatWrapper'); // Contenedor principal del chat
 
 // Función para iniciar el chat tras recibir el ID Token de Google
 const startChat = (idToken) => {
@@ -13,10 +14,13 @@ const startChat = (idToken) => {
 
     // Oculta la interfaz de login de Google
     document.getElementById('g_id_onload').style.display = 'none';
-    document.querySelector('.g_id_signin').style.display = 'none';
+    const googleSignInDiv = document.querySelector('.g_id_signin');
+    if (googleSignInDiv) {
+        googleSignInDiv.style.display = 'none';
+    }
 
     // Muestra el área del chat para el usuario autenticado
-    document.getElementById('chatWrapper').style.display = 'flex';
+    chatWrapper.style.display = 'flex';
 
     // EVENTO: llega un mensaje desde el servidor
     socket.onmessage = (event) => {
@@ -66,7 +70,15 @@ const startChat = (idToken) => {
     // EVENTO: conexión cerrada (error o token inválido)
     socket.onclose = (event) => {
         console.error(`Conexión cerrada. Código: ${event.code}. Razón: ${event.reason}`);
+        // Muestra la alerta de fallo
         alert('La conexión fue rechazada o se perdió (posible fallo de autenticación).');
+        // Vuelve a mostrar el login si falla
+        document.getElementById('g_id_onload').style.display = 'block';
+        const googleSignInDiv = document.querySelector('.g_id_signin');
+        if (googleSignInDiv) {
+            googleSignInDiv.style.display = 'block';
+        }
+        chatWrapper.style.display = 'none';
     };
 
     // EVENTO: error en la conexión
@@ -94,10 +106,24 @@ const sendMessage = () => {
 };
 
 // Evento: enviar cuando se hace clic en el botón
-sendButton.addEventListener('click', sendMessage);
+if (sendButton) {
+    sendButton.addEventListener('click', (e) => {
+        e.preventDefault(); // Evita el envío del formulario si existe
+        sendMessage();
+    });
+}
+
 
 // Evento: enviar cuando se presiona Enter
-input.addEventListener('keypress', (e) => e.key === 'Enter' && sendMessage());
+if (input) {
+    input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault(); // Previene el salto de línea en el input
+            sendMessage();
+        }
+    });
+}
+
 
 // Función para evitar que HTML malicioso se renderice
 function escapeHtml(text) {
